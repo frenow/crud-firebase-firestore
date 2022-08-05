@@ -10,14 +10,13 @@ function App() {
   const [newNome, setNewNome] = useState()
   const [newEmail, setNewEmail] = useState()
   
-
-
+  
   useEffect(() => {
     const dbRef = collection(db, "cadastro");
     getDocs(dbRef)
     .then(docs => {
       setUsers(docs.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-      console.log(users)
+      console.log(docs.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
 
   }, []);
@@ -26,7 +25,8 @@ function App() {
     const newUser = {nome: newNome, email: newEmail}
     console.log(newUser);
     const dbRef = collection(db, "cadastro");
-    addDoc(dbRef, newUser);    
+    addDoc(dbRef, newUser);  
+    setUsers([...users, newUser]);  
   };  
 
   return (
